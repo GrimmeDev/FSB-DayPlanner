@@ -3,11 +3,13 @@ var curDay = $("#currentDay");
 var timeContainer = $(".container");
 // finds reference to storedTasks, if non exists, create empty array
 // var tasksToDo = JSON.parse(localStorage.getItem("storedTasks")) || [];
-
-var tasks = {
-    time: 0,
-    task: ""
-};
+// creates variable to store current time ID, if it doesn't exist already
+// tasks.time = JSON.parse(localStorage.getItem("taskID"));
+var task = "";
+// var tasks = {
+//     time: 0,
+//     task: ""
+// };
 //#endregion
 
 //#region Functioon Definitions
@@ -27,9 +29,8 @@ function displayHours() {
         var saveIcon = $('<svg width="75%" height="75%" viewBox="0 0 16 16" class="bi bi-text-center" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>')
         var newRow = $('<div class="row border">');
         newRow.attr("id", (i + 9));
-        // creates variable to store current time ID, if it doesn't exist already
-        tasks.time = JSON.parse(localStorage.getItem("taskID"));
-        // console.log(tasks.time);
+        var timeID = newRow.attr("id");
+        // var timeID = localStorage.setItem(newRow.attr("id"), "");
         // console.log(newRow.attr("id"));
 
         // left column to display business hours
@@ -47,7 +48,12 @@ function displayHours() {
             leftCol.text((i + 9) + " PM");
         else
             leftCol.text((i + 9) - 12 + " PM");
-        midCol.attr("placeholder", "Enter Text Here...");
+        if (localStorage.getItem(timeID) != "") {
+            // loads previously saved text
+            midCol.text(localStorage.getItem(timeID));
+        }
+        else
+            midCol.attr("placeholder", "Enter Text Here...");
         // rightCol.text("Save Button");
 
         // appending elements to proper locations
@@ -88,11 +94,18 @@ function displayHours() {
     // possibly redraw/refresh window after saving?
     function saveTasks() {
         $("textarea").each(function () {
-            tasks.time = $(this).parent().attr("id");
-            console.log(tasks.time);
-            tasks.task = $(this).val();
-            console.log(tasks.task);
-            localStorage.setItem("taskID", JSON.stringify(tasks));
+            task = $(this).val();
+            console.log(task);
+            // tasks.time is the localStorage reference
+            // push only tasks.task to localStorage based on the reference
+            localStorage.setItem($(this).parent().attr("id"), task);
+
+
+            // tasks.time = $(this).parent().attr("id");
+            // console.log(tasks.time);
+            // tasks.task = $(this).val();
+            // console.log(tasks.task);
+            // localStorage.setItem("taskID", JSON.stringify(tasks));
         })
         // tasks.time = $(this).parent().attr("id");
         // console.log(tasks.time);
