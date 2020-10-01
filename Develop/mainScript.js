@@ -110,8 +110,6 @@ function displayHours() {
     updateTime();
 };
 
-
-
 //#endregion
 
 //#region Event Listeners
