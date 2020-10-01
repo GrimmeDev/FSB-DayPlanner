@@ -27,4 +27,4 @@ When I refresh the page my tasks are still displayed
 ![Work Planner](Assets/exampleImage.png)
 
 #### Deployed Site
-<a href="https://grimmedev.github.io/FSB-DayPlanner/">JavaScript Quiz</a>
+<a href="https://grimmedev.github.io/FSB-DayPlanner/">Day Planner</a>
