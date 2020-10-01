@@ -2,7 +2,7 @@
 var curDay = $("#currentDay");
 var timeContainer = $(".container");
 // finds reference to storedTasks, if non exists, create empty array
-var tasksToDo = JSON.parse(localStorage.getItem("storedTasks")) || [];
+// var tasksToDo = JSON.parse(localStorage.getItem("storedTasks")) || [];
 
 var tasks = {
     time: 0,
@@ -27,6 +27,9 @@ function displayHours() {
         var saveIcon = $('<svg width="75%" height="75%" viewBox="0 0 16 16" class="bi bi-text-center" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>')
         var newRow = $('<div class="row border">');
         newRow.attr("id", (i + 9));
+        // creates variable to store current time ID, if it doesn't exist already
+        tasks.time = JSON.parse(localStorage.getItem("taskID"));
+        // console.log(tasks.time);
         // console.log(newRow.attr("id"));
 
         // left column to display business hours
@@ -89,12 +92,17 @@ function displayHours() {
             console.log(tasks.time);
             tasks.task = $(this).val();
             console.log(tasks.task);
-            tasksToDo.push(tasks);
-        });
-        localStorage.setItem("storedTasks", JSON.stringify(tasksToDo));
+            localStorage.setItem("taskID", JSON.stringify(tasks));
+        })
+        // tasks.time = $(this).parent().attr("id");
+        // console.log(tasks.time);
+        // tasks.task = $(this).val();
+        // console.log(tasks.task);
+        // tasksToDo.push(tasks);
+        // localStorage.setItem("storedTasks", JSON.stringify(tasksToDo));
     };
     updateTime();
-}
+};
 
 
 
