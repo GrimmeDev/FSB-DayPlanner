@@ -4,6 +4,10 @@ var timeContainer = $(".container");
 // finds reference to storedTasks, if non exists, create empty array
 var tasksToDo = JSON.parse(localStorage.getItem("storedTasks")) || [];
 
+var tasks = {
+    time: 0,
+    task: ""
+};
 //#endregion
 
 //#region Functioon Definitions
@@ -23,7 +27,7 @@ function displayHours() {
         var saveIcon = $('<svg width="75%" height="75%" viewBox="0 0 16 16" class="bi bi-text-center" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>')
         var newRow = $('<div class="row border">');
         newRow.attr("id", (i + 9));
-        console.log(newRow.attr("id"));
+        // console.log(newRow.attr("id"));
 
         // left column to display business hours
         var leftCol = $('<div class="col-lg-1 border text-right p-1 hour">');
@@ -49,14 +53,14 @@ function displayHours() {
         newRow.append(midCol);
         newRow.append(rightCol);
         rightCol.append(saveIcon);
-    }
+    };
 
     // color coding
     function updateTime() {
         var currentTime = moment().hours();
         // console.log("Moment Time: " + currentTime);
         $(".timeColor").each(function () {
-            var curHour = parseInt(newRow.attr("id"));
+            var curHour = parseInt($(this).parent().attr("id"));
             // console.log("Row Time: " + curHour);
 
             if (curHour > currentTime)
@@ -67,23 +71,28 @@ function displayHours() {
                 $(this).addClass("past ");
         })
 
-    }
+    };
+
+    $(".saveBtn").click(function () {
+        // console.log("Button clicked.");
+        // console.log($(this));
+        saveTasks();
+    });
+
     // save button psuedo
     // ANY button clicked, checks if inputField value is > 0
     // if yes: save ALL of those fields into local storage
     // possibly redraw/refresh window after saving?
     function saveTasks() {
-        $(".textarea").each(function () {
-            if ($(this).value != null || $(this).value != "") {
-                console.log("Empty.");
-            }
-            else {
-                console.log("Has Text");
-            }
-        })
-    }
-
-    $(".saveBtn").click(saveTasks);
+        $("textarea").each(function () {
+            tasks.time = $(this).parent().attr("id");
+            console.log(tasks.time);
+            tasks.task = $(this).val();
+            console.log(tasks.task);
+            tasksToDo.push(tasks);
+        });
+        localStorage.setItem("storedTasks", JSON.stringify(tasksToDo));
+    };
     updateTime();
 }
 
