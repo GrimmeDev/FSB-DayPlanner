@@ -47,7 +47,7 @@ function displayHours() {
         // checks if localStorage key:value is empty
         if (localStorage.getItem(timeID) != "") {
             // loads previously saved text
-            // console.log(localStorage.getItem(timeID));
+            console.log(localStorage.getItem(timeID));
             midCol.text(localStorage.getItem(timeID));
         }
         else
